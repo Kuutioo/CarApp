@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "534654500634",
-    "project_id": "gigacord-668a6",
-    "storage_bucket": "gigacord-668a6.appspot.com"
+    "project_number": "935433596527",
+    "project_id": "car-app-8f1df",
+    "storage_bucket": "car-app-8f1df.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:534654500634:android:ad1ffc4c55ed1e97b7f6a3",
+        "mobilesdk_app_id": "1:935433596527:android:cc94df15eec8616a1fe79a",
         "android_client_info": {
-          "package_name": "com.example.chat_app"
+          "package_name": "com.example.car_app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "534654500634-prhmb3i4euu6hbtn66njgcd7rrk778fc.apps.googleusercontent.com",
+          "client_id": "935433596527-gnrr3977amebcvrtjekrf7of08ckplpt.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDGVINpzP-UcBSaCIeJYBuyAWztMjpBDwY"
+          "current_key": "AIzaSyDDFMVsjeY7_o5fzCCs5mKxU8_VEbB5WdI"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "534654500634-prhmb3i4euu6hbtn66njgcd7rrk778fc.apps.googleusercontent.com",
+              "client_id": "935433596527-gnrr3977amebcvrtjekrf7of08ckplpt.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
