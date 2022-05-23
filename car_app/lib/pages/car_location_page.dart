@@ -8,9 +8,11 @@ import '../models/car_location.dart';
 import '../helpers/location_helper.dart';
 
 class CarLocationPage extends StatefulWidget {
-  final CarLocation? initialLocation;
+  static const routeName = 'car-location-page';
+
+  final CarLocation? carLocation;
   CarLocationPage({
-    this.initialLocation = const CarLocation(
+    this.carLocation = const CarLocation(
       latitude: -23.569953,
       longitude: -46.635863,
       address: '',
@@ -33,47 +35,76 @@ class _CarLocationPageState extends State<CarLocationPage> {
   }
 
   Future<void> _getAddress() async {
-    address = await LocationHelper.getPlaceAddress(
-      widget.initialLocation!.latitude,
-      widget.initialLocation!.longitude,
+    final addressString = await LocationHelper.getPlaceAddress(
+      widget.carLocation!.latitude,
+      widget.carLocation!.longitude,
     );
+    setState(() {
+      address = addressString;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    final arguments = ModalRoute.of(context)!.settings.arguments as Map;
+    print(arguments['latitude']);
+    print(arguments['longitude']);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Your Car Location'),
       ),
-      body: FlutterMap(
-        options: MapOptions(
-          center: latlng.LatLng(widget.initialLocation!.latitude,
-              widget.initialLocation!.longitude),
-          zoom: 15.0,
-        ),
-        layers: [
-          TileLayerOptions(
-            urlTemplate:
-                'https://api.mapbox.com/styles/v1/apinamestari12/cl3ime15u000c15qutuskeny3/tiles/256/{z}/{x}/{y}@2x?access_token=$STYLE_KEY',
-            additionalOptions: {
-              'accessToken': STYLE_KEY,
-              'id': 'mapbox.mapbox-streets-v8',
-            },
-          ),
-          MarkerLayerOptions(markers: [
-            Marker(
-              width: 80.0,
-              height: 80.0,
-              point: latlng.LatLng(widget.initialLocation!.latitude,
-                  widget.initialLocation!.longitude),
-              builder: (ctx) => const Icon(
-                Icons.add_location,
-                color: Colors.red,
-              ),
+      body: address == null
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
+          : Stack(
+              children: [
+                FlutterMap(
+                  options: MapOptions(
+                    center: latlng.LatLng(widget.carLocation!.latitude,
+                        widget.carLocation!.longitude),
+                    zoom: 15.0,
+                  ),
+                  layers: [
+                    TileLayerOptions(
+                      urlTemplate:
+                          'https://api.mapbox.com/styles/v1/apinamestari12/cl3ime15u000c15qutuskeny3/tiles/256/{z}/{x}/{y}@2x?access_token=$STYLE_KEY',
+                      additionalOptions: {
+                        'accessToken': STYLE_KEY,
+                        'id': 'mapbox.mapbox-streets-v8',
+                      },
+                    ),
+                    MarkerLayerOptions(markers: [
+                      Marker(
+                        width: 30.0,
+                        height: 30.0,
+                        point: latlng.LatLng(widget.carLocation!.latitude,
+                            widget.carLocation!.longitude),
+                        builder: (ctx) => const Icon(
+                          Icons.add_location,
+                          color: Colors.red,
+                        ),
+                      ),
+                    ]),
+                  ],
+                ),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Container(
+                    color: Colors.black54,
+                    child: Text(
+                      '$address',
+                      style: const TextStyle(
+                        fontSize: 24,
+                        color: Colors.white,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ]),
-        ],
-      ),
     );
   }
 }

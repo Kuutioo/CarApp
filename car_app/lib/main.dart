@@ -20,6 +20,9 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: CarsPage(),
+      routes: {
+        CarLocationPage.routeName: (context) => CarLocationPage(),
+      },
     );
   }
 }
