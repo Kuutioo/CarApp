@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "534654500634",
+    "project_id": "gigacord-668a6",
+    "storage_bucket": "gigacord-668a6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:534654500634:android:ad1ffc4c55ed1e97b7f6a3",
+        "android_client_info": {
+          "package_name": "com.example.chat_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "534654500634-prhmb3i4euu6hbtn66njgcd7rrk778fc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGVINpzP-UcBSaCIeJYBuyAWztMjpBDwY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "534654500634-prhmb3i4euu6hbtn66njgcd7rrk778fc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
