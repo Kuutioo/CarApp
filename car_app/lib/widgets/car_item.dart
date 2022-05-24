@@ -40,6 +40,12 @@ class CarItem extends StatelessWidget {
               onPressed: () {
                 carLocation?.latitude = documents[index]['latitude'];
                 carLocation?.longitude = documents[index]['longitude'];
+                if (carLocation!.latitude <= 66.5049 &&
+                    carLocation!.latitude >= 66.5029 &&
+                    carLocation!.longitude <= 25.7304 &&
+                    carLocation!.longitude >= 25.7284) {
+                  print('Car at home');
+                }
                 Navigator.pushNamed(
                   context,
                   CarLocationPage.routeName,

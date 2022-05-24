@@ -6,14 +6,10 @@ import 'package:latlong2/latlong.dart' as latlng;
 
 import '../models/house_location.dart';
 import '../helpers/location_helper.dart';
+import '../widgets/main_drawer.dart';
 
 class HouseLocationPage extends StatefulWidget {
   static const routeName = 'house-location-page';
-
-  /*HouseLocation? houseLocation;
-
-  HouseLocationPage({this.houseLocation});*/
-
   @override
   State<HouseLocationPage> createState() => _HouseLocationPageState();
 }
@@ -23,11 +19,6 @@ class _HouseLocationPageState extends State<HouseLocationPage> {
       'pk.eyJ1IjoiYXBpbmFtZXN0YXJpMTIiLCJhIjoiY2wzYmJ0Ynk3MGM1ZDNjb2lkeTNpbDY5YiJ9.IqeKa6IY3F3Eu-faaPyMrQ';
 
   String? address;
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   Future<void> _getAddress(double latitude, double longitude) async {
     final addressString = await LocationHelper.getPlaceAddress(
@@ -46,33 +37,34 @@ class _HouseLocationPageState extends State<HouseLocationPage> {
     if (address == null) {
       _getAddress(arguments.latitude, arguments.longitude);
     }
-
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Your Car Location'),
-        ),
-        body: address == null
-            ? const Center(
-                child: CircularProgressIndicator(),
-              )
-            : Stack(
-                children: [
-                  FlutterMap(
-                    options: MapOptions(
-                      center: latlng.LatLng(
-                          arguments.latitude, arguments.longitude),
-                      zoom: 15.0,
+      drawer: MainDrawer(),
+      appBar: AppBar(
+        title: const Text('Your Home'),
+      ),
+      body: address == null
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
+          : Stack(
+              children: [
+                FlutterMap(
+                  options: MapOptions(
+                    center:
+                        latlng.LatLng(arguments.latitude, arguments.longitude),
+                    zoom: 15.0,
+                  ),
+                  layers: [
+                    TileLayerOptions(
+                      urlTemplate:
+                          'https://api.mapbox.com/styles/v1/apinamestari12/cl3ime15u000c15qutuskeny3/tiles/256/{z}/{x}/{y}@2x?access_token=$STYLE_KEY',
+                      additionalOptions: {
+                        'accessToken': STYLE_KEY,
+                        'id': 'mapbox.mapbox-streets-v8',
+                      },
                     ),
-                    layers: [
-                      TileLayerOptions(
-                        urlTemplate:
-                            'https://api.mapbox.com/styles/v1/apinamestari12/cl3ime15u000c15qutuskeny3/tiles/256/{z}/{x}/{y}@2x?access_token=$STYLE_KEY',
-                        additionalOptions: {
-                          'accessToken': STYLE_KEY,
-                          'id': 'mapbox.mapbox-streets-v8',
-                        },
-                      ),
-                      MarkerLayerOptions(markers: [
+                    MarkerLayerOptions(
+                      markers: [
                         Marker(
                           width: 30.0,
                           height: 30.0,
@@ -83,24 +75,37 @@ class _HouseLocationPageState extends State<HouseLocationPage> {
                             color: Colors.red,
                           ),
                         ),
-                      ]),
-                    ],
-                  ),
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Container(
-                      color: Colors.black54,
-                      child: Text(
-                        '$address',
-                        style: const TextStyle(
-                          fontSize: 24,
-                          color: Colors.white,
+                      ],
+                    ),
+                    CircleLayerOptions(circles: [
+                      CircleMarker(
+                        point: latlng.LatLng(
+                          arguments.latitude,
+                          arguments.longitude,
                         ),
-                        textAlign: TextAlign.center,
+                        radius: 111,
+                        color: Colors.blue.withOpacity(0.3),
+                        useRadiusInMeter: true,
                       ),
+                    ])
+                  ],
+                ),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Container(
+                    color: Colors.black54,
+                    child: Text(
+                      '$address',
+                      style: const TextStyle(
+                        fontSize: 24,
+                        color: Colors.white,
+                      ),
+                      textAlign: TextAlign.center,
                     ),
                   ),
-                ],
-              ));
+                ),
+              ],
+            ),
+    );
   }
 }

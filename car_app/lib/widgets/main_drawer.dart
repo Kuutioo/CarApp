@@ -1,9 +1,11 @@
 // ignore_for_file: use_key_in_widget_constructors
 
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-import '../pages/house_location_page.dart';
 import '../models/house_location.dart';
+import '../pages/house_location_page.dart';
 
 class MainDrawer extends StatelessWidget {
   Widget buildListTile(String title, IconData icon, VoidCallback tapHandler) {
@@ -23,43 +25,65 @@ class MainDrawer extends StatelessWidget {
     );
   }
 
+  final HouseLocation houseLocation = HouseLocation(
+    latitude: 0,
+    longitude: 0,
+    address: '',
+  );
+
   @override
   Widget build(BuildContext context) {
-    return Drawer(
-      child: Column(
-        children: [
-          Container(
-            height: 80,
-            width: double.infinity,
-            padding: const EdgeInsets.all(15),
-            alignment: Alignment.centerLeft,
-            color: Theme.of(context).primaryColor,
-            child: const Padding(
-              padding: EdgeInsets.all(15.0),
-              child: Text('Cars',
-                  style: TextStyle(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 22,
-                      color: Colors.white)),
+    return StreamBuilder(
+        stream: FirebaseFirestore.instance.collection('home').snapshots(),
+        builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
+          if (streamSnapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          final documents = streamSnapshot.data!.docs;
+          return Drawer(
+            child: Column(
+              children: [
+                Container(
+                  height: 80,
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(15),
+                  alignment: Alignment.centerLeft,
+                  color: Theme.of(context).primaryColor,
+                  child: const Padding(
+                    padding: EdgeInsets.all(15.0),
+                    child: Text('Cars',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 22,
+                            color: Colors.white)),
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                buildListTile(
+                  'Your cars',
+                  Icons.car_repair,
+                  () {
+                    Navigator.of(context).pushReplacementNamed('/');
+                  },
+                ),
+                buildListTile(
+                  'Your house',
+                  Icons.house,
+                  () {
+                    houseLocation.latitude = documents[0]['latitude'];
+                    houseLocation.longitude = documents[0]['longitude'];
+                    Navigator.of(context).pushReplacementNamed(
+                        HouseLocationPage.routeName,
+                        arguments: houseLocation);
+                  },
+                ),
+              ],
             ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          buildListTile(
-            'Your cars',
-            Icons.car_repair,
-            () {
-              Navigator.of(context).pushReplacementNamed('/');
-            },
-          ),
-          buildListTile(
-            'Your house',
-            Icons.house,
-            () {},
-          ),
-        ],
-      ),
-    );
+          );
+        });
   }
 }
