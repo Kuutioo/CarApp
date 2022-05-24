@@ -77,17 +77,19 @@ class _HouseLocationPageState extends State<HouseLocationPage> {
                         ),
                       ],
                     ),
-                    CircleLayerOptions(circles: [
-                      CircleMarker(
-                        point: latlng.LatLng(
-                          arguments.latitude,
-                          arguments.longitude,
+                    CircleLayerOptions(
+                      circles: [
+                        CircleMarker(
+                          point: latlng.LatLng(
+                            arguments.latitude,
+                            arguments.longitude,
+                          ),
+                          radius: 111,
+                          color: Colors.blue.withOpacity(0.3),
+                          useRadiusInMeter: true,
                         ),
-                        radius: 111,
-                        color: Colors.blue.withOpacity(0.3),
-                        useRadiusInMeter: true,
-                      ),
-                    ])
+                      ],
+                    ),
                   ],
                 ),
                 Align(

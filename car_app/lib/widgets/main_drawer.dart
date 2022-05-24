@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 
-import '../models/house_location.dart';
-import '../pages/house_location_page.dart';
+import '../models/location.dart';
+import '../pages/car_location_page.dart';
 
 class MainDrawer extends StatelessWidget {
   Widget buildListTile(String title, IconData icon, VoidCallback tapHandler) {
@@ -25,7 +25,7 @@ class MainDrawer extends StatelessWidget {
     );
   }
 
-  final HouseLocation houseLocation = HouseLocation(
+  final Location houseLocation = Location(
     latitude: 0,
     longitude: 0,
     address: '',
@@ -74,11 +74,15 @@ class MainDrawer extends StatelessWidget {
                   'Your house',
                   Icons.house,
                   () {
+                    FirebaseFirestore.instance
+                        .collection('cars')
+                        .snapshots()
+                        .listen((event) {});
                     houseLocation.latitude = documents[0]['latitude'];
                     houseLocation.longitude = documents[0]['longitude'];
                     Navigator.of(context).pushReplacementNamed(
-                        HouseLocationPage.routeName,
-                        arguments: houseLocation);
+                        CarLocationPage.routeName,
+                        arguments: documents);
                   },
                 ),
               ],

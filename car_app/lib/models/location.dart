@@ -1,9 +1,9 @@
-class CarLocation {
+class Location {
   double latitude;
   double longitude;
   String address;
 
-  CarLocation({
+  Location({
     required this.latitude,
     required this.longitude,
     required this.address,
