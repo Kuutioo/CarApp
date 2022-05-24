@@ -59,7 +59,7 @@ class CarsPage extends StatelessWidget {
                         child: Text(
                           documents[index]['name'],
                           style: const TextStyle(
-                              fontSize: 30, color: Colors.white),
+                              fontSize: 31, color: Colors.white),
                         ),
                         color: Colors.black38,
                       ),
