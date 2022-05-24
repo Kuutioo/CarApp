@@ -1,3 +1,5 @@
+// ignore_for_file: use_key_in_widget_constructors, prefer_typing_uninitialized_variables
+
 import 'package:flutter/material.dart';
 
 import '../pages/car_location_page.dart';
@@ -5,7 +7,7 @@ import '../models/car_location.dart';
 
 class CarItem extends StatelessWidget {
   final documents;
-  CarLocation? carLocation = CarLocation(
+  final CarLocation? carLocation = CarLocation(
     latitude: 0,
     longitude: 0,
     address: '',
@@ -60,6 +62,5 @@ class CarItem extends StatelessWidget {
         );
       }),
     );
-    ;
   }
 }

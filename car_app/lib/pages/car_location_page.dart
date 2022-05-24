@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors_in_immutables, use_key_in_widget_constructors, dead_code
+// ignore_for_file: prefer_const_constructors_in_immutables, use_key_in_widget_constructors, dead_code, constant_identifier_names
 
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -10,10 +10,6 @@ import '../helpers/location_helper.dart';
 class CarLocationPage extends StatefulWidget {
   static const routeName = 'car-location-page';
 
-  /*CarLocation? carLocation;
-
-  CarLocationPage({this.carLocation});*/
-
   @override
   State<CarLocationPage> createState() => _CarLocationPageState();
 }
@@ -23,11 +19,6 @@ class _CarLocationPageState extends State<CarLocationPage> {
       'pk.eyJ1IjoiYXBpbmFtZXN0YXJpMTIiLCJhIjoiY2wzYmJ0Ynk3MGM1ZDNjb2lkeTNpbDY5YiJ9.IqeKa6IY3F3Eu-faaPyMrQ';
 
   String? address;
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   Future<void> _getAddress(double latitude, double longitude) async {
     final addressString = await LocationHelper.getPlaceAddress(
