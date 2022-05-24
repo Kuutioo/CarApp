@@ -72,7 +72,7 @@ class _HouseLocationPageState extends State<HouseLocationPage> {
                               arguments.latitude, arguments.longitude),
                           builder: (ctx) => const Icon(
                             Icons.add_location,
-                            color: Colors.red,
+                            color: Colors.blue,
                           ),
                         ),
                       ],
