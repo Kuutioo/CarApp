@@ -1,5 +1,9 @@
-import 'package:car_app/pages/car_location_page.dart';
+// import 'package:car_app/pages/car_location_page.dart';
+
 import 'package:flutter/material.dart';
+
+import '../pages/house_location_page.dart';
+import '../models/house_location.dart';
 
 class MainDrawer extends StatelessWidget {
   Widget buildListTile(String title, IconData icon, VoidCallback tapHandler) {
@@ -52,7 +56,15 @@ class MainDrawer extends StatelessWidget {
           buildListTile(
             'Your house',
             Icons.house,
-            () {},
+            () {
+              carLocation?.latitude = documents[index]['latitude'];
+              carLocation?.longitude = documents[index]['longitude'];
+              Navigator.pushNamed(
+                context,
+                CarLocationPage.routeName,
+                arguments: carLocation,
+              );
+            },
           ),
         ],
       ),
