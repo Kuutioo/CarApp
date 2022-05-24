@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 
 import './pages/cars_page.dart';
 import './pages/car_location_page.dart';
+import './models/car_location.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

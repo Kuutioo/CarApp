@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 
 import '../pages/car_location_page.dart';
+import '../models/car_location.dart';
 
 class CarItem extends StatelessWidget {
   final documents;
+  CarLocation? carLocation = CarLocation(
+    latitude: 0,
+    longitude: 0,
+    address: '',
+  );
 
   CarItem(this.documents);
 
@@ -30,13 +36,12 @@ class CarItem extends StatelessWidget {
                 ),
               ),
               onPressed: () {
+                carLocation?.latitude = documents[index]['latitude'];
+                carLocation?.longitude = documents[index]['longitude'];
                 Navigator.pushNamed(
                   context,
                   CarLocationPage.routeName,
-                  arguments: {
-                    'latitude': documents[index]['latitude'],
-                    'longitude': documents[index]['longitude'],
-                  },
+                  arguments: carLocation,
                 );
               },
             ),
