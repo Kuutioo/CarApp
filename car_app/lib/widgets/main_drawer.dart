@@ -1,4 +1,4 @@
-// import 'package:car_app/pages/car_location_page.dart';
+// ignore_for_file: use_key_in_widget_constructors
 
 import 'package:flutter/material.dart';
 
@@ -56,15 +56,7 @@ class MainDrawer extends StatelessWidget {
           buildListTile(
             'Your house',
             Icons.house,
-            () {
-              carLocation?.latitude = documents[index]['latitude'];
-              carLocation?.longitude = documents[index]['longitude'];
-              Navigator.pushNamed(
-                context,
-                CarLocationPage.routeName,
-                arguments: carLocation,
-              );
-            },
+            () {},
           ),
         ],
       ),

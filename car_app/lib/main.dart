@@ -1,12 +1,12 @@
-import 'package:car_app/models/house_location.dart';
-import 'package:car_app/pages/house_location_page.dart';
+// ignore_for_file: use_key_in_widget_constructors
+
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 
+import './pages/house_location_page.dart';
 import './pages/cars_page.dart';
 import './pages/car_location_page.dart';
-import './models/car_location.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
