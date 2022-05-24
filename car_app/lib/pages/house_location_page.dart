@@ -4,21 +4,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart' as latlng;
 
-import '../models/car_location.dart';
+import '../models/house_location.dart';
 import '../helpers/location_helper.dart';
 
-class CarLocationPage extends StatefulWidget {
-  static const routeName = 'car-location-page';
+class HouseLocationPage extends StatefulWidget {
+  static const routeName = 'house-location-page';
 
-  /*CarLocation? carLocation;
+  /*HouseLocation? houseLocation;
 
-  CarLocationPage({this.carLocation});*/
+  HouseLocationPage({this.houseLocation});*/
 
   @override
-  State<CarLocationPage> createState() => _CarLocationPageState();
+  State<HouseLocationPage> createState() => _HouseLocationPageState();
 }
 
-class _CarLocationPageState extends State<CarLocationPage> {
+class _HouseLocationPageState extends State<HouseLocationPage> {
   static const STYLE_KEY =
       'pk.eyJ1IjoiYXBpbmFtZXN0YXJpMTIiLCJhIjoiY2wzYmJ0Ynk3MGM1ZDNjb2lkeTNpbDY5YiJ9.IqeKa6IY3F3Eu-faaPyMrQ';
 
@@ -41,7 +41,8 @@ class _CarLocationPageState extends State<CarLocationPage> {
 
   @override
   Widget build(BuildContext context) {
-    final arguments = ModalRoute.of(context)?.settings.arguments as CarLocation;
+    final arguments =
+        ModalRoute.of(context)?.settings.arguments as HouseLocation;
     if (address == null) {
       _getAddress(arguments.latitude, arguments.longitude);
     }
