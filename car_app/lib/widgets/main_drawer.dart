@@ -1,7 +1,8 @@
+import 'package:car_app/pages/car_location_page.dart';
 import 'package:flutter/material.dart';
 
 class MainDrawer extends StatelessWidget {
-  Widget buildListTile(String title, IconData icon) {
+  Widget buildListTile(String title, IconData icon, VoidCallback tapHandler) {
     return ListTile(
       leading: Icon(
         icon,
@@ -14,7 +15,7 @@ class MainDrawer extends StatelessWidget {
           fontWeight: FontWeight.bold,
         ),
       ),
-      onTap: () {},
+      onTap: tapHandler,
     );
   }
 
@@ -29,12 +30,13 @@ class MainDrawer extends StatelessWidget {
             padding: const EdgeInsets.all(15),
             alignment: Alignment.centerLeft,
             color: Theme.of(context).primaryColor,
-            child: const Text(
-              'Cars',
-              style: TextStyle(
-                  fontWeight: FontWeight.w700,
-                  fontSize: 22,
-                  color: Colors.white),
+            child: const Padding(
+              padding: EdgeInsets.all(15.0),
+              child: Text('Cars',
+                  style: TextStyle(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 22,
+                      color: Colors.white)),
             ),
           ),
           const SizedBox(
@@ -43,10 +45,14 @@ class MainDrawer extends StatelessWidget {
           buildListTile(
             'Your house',
             Icons.house,
+            () {},
           ),
           buildListTile(
             'Your cars',
             Icons.car_repair,
+            () {
+              Navigator.of(context).pushReplacementNamed('/');
+            },
           )
         ],
       ),
