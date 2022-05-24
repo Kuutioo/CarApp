@@ -43,17 +43,17 @@ class MainDrawer extends StatelessWidget {
             height: 20,
           ),
           buildListTile(
-            'Your house',
-            Icons.house,
-            () {},
-          ),
-          buildListTile(
             'Your cars',
             Icons.car_repair,
             () {
               Navigator.of(context).pushReplacementNamed('/');
             },
-          )
+          ),
+          buildListTile(
+            'Your house',
+            Icons.house,
+            () {},
+          ),
         ],
       ),
     );
