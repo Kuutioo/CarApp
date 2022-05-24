@@ -1,8 +1,8 @@
 // ignore_for_file: deprecated_member_use
-
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../widgets/main_drawer.dart';
 import './car_location_page.dart';
 import '../widgets/car_item.dart';
 
@@ -13,9 +13,7 @@ class CarsPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Your Cars'),
       ),
-      drawer: Drawer(
-        child: Text('test'),
-      ),
+      drawer: MainDrawer(),
       body: StreamBuilder(
         stream: FirebaseFirestore.instance.collection('cars').snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
