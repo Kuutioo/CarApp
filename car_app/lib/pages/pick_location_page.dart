@@ -8,8 +8,7 @@ import '../models/location.dart';
 
 class PickLocationPage extends StatefulWidget {
   static const routeName = 'pick-location-page';
-  Location initialLocation =
-      Location(latitude: -23.569953, longitude: -46.635863, address: '');
+  Location initialLocation;
   final bool isSelecting;
   PickLocationPage({required this.initialLocation, this.isSelecting = true});
 
@@ -49,12 +48,16 @@ class _PickLocationPageState extends State<PickLocationPage> {
       ),
       body: FlutterMap(
         options: MapOptions(
-          //center: latlng.LatLng(-23.569953, -46.635863),
           center: latlng.LatLng(widget.initialLocation.latitude,
               widget.initialLocation.longitude),
-          zoom: 14.0,
-          //onTap: _handleTap,
-          onTap: true ? _retPositionMap : null,
+          zoom: 13.0,
+          onTap: widget.isSelecting
+              ? (tapPosition, point) {
+                  setState(() {
+                    _pickedLocation = point;
+                  });
+                }
+              : null,
         ),
         layers: [
           TileLayerOptions(
