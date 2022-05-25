@@ -25,7 +25,13 @@ class MainDrawer extends StatelessWidget {
     );
   }
 
-  final Location houseLocation = Location(
+  final Location? houseLocation = Location(
+    latitude: 0,
+    longitude: 0,
+    address: '',
+  );
+
+  final Location? carLocation = Location(
     latitude: 0,
     longitude: 0,
     address: '',
@@ -53,11 +59,13 @@ class MainDrawer extends StatelessWidget {
                   color: Theme.of(context).primaryColor,
                   child: const Padding(
                     padding: EdgeInsets.all(15.0),
-                    child: Text('Cars',
-                        style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 22,
-                            color: Colors.white)),
+                    child: Text(
+                      'Cars',
+                      style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 22,
+                          color: Colors.white),
+                    ),
                   ),
                 ),
                 const SizedBox(
@@ -74,15 +82,26 @@ class MainDrawer extends StatelessWidget {
                   'Your house',
                   Icons.house,
                   () {
+                    houseLocation?.latitude = documents[0]['latitude'];
+                    houseLocation?.longitude = documents[0]['longitude'];
+
                     FirebaseFirestore.instance
                         .collection('cars')
                         .snapshots()
-                        .listen((event) {});
-                    houseLocation.latitude = documents[0]['latitude'];
-                    houseLocation.longitude = documents[0]['longitude'];
+                        .listen((event) {
+                      for (var element in event.docs) {
+                        carLocation?.latitude = element['latitude'];
+                        carLocation?.longitude = element['longitude'];
+                      }
+                    });
                     Navigator.of(context).pushReplacementNamed(
-                        CarLocationPage.routeName,
-                        arguments: documents);
+                      CarLocationPage.routeName,
+                      arguments: {
+                        'carLocation': carLocation,
+                        'houseLocation': houseLocation,
+                        'focusCar': false,
+                      },
+                    );
                   },
                 ),
               ],

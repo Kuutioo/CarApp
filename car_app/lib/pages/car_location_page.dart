@@ -1,12 +1,12 @@
 // ignore_for_file: prefer_const_constructors_in_immutables, use_key_in_widget_constructors, dead_code, constant_identifier_names
 
-import 'package:car_app/models/house_location.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart' as latlng;
 
 import '../models/location.dart';
 import '../helpers/location_helper.dart';
+import '../widgets/main_drawer.dart';
 
 class CarLocationPage extends StatefulWidget {
   static const routeName = 'car-location-page';
@@ -38,21 +38,32 @@ class _CarLocationPageState extends State<CarLocationPage> {
   @override
   Widget build(BuildContext context) {
     final arguments =
-        ModalRoute.of(context)?.settings.arguments as Map<String, Location?>;
+        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
     widget.carLocation.latitude = arguments['carLocation']!.latitude;
     widget.carLocation.longitude = arguments['carLocation']!.longitude;
 
     widget.houseLocation.latitude = arguments['houseLocation']!.latitude;
     widget.houseLocation.longitude = arguments['houseLocation']!.longitude;
 
+    print(widget.carLocation.latitude);
+    print(widget.carLocation.longitude);
+
     if (address == null) {
-      _getAddress(widget.carLocation.latitude, widget.carLocation.longitude);
+      if (arguments['focusCar']) {
+        _getAddress(widget.carLocation.latitude, widget.carLocation.longitude);
+      } else {
+        _getAddress(
+            widget.houseLocation.latitude, widget.houseLocation.longitude);
+      }
     }
 
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Your Car Location'),
+          title: arguments['focusCar']
+              ? const Text('Your Car Location')
+              : const Text('Your House Location'),
         ),
+        drawer: arguments['focusCar'] ? null : MainDrawer(),
         body: address == null
             ? const Center(
                 child: CircularProgressIndicator(),
@@ -61,8 +72,11 @@ class _CarLocationPageState extends State<CarLocationPage> {
                 children: [
                   FlutterMap(
                     options: MapOptions(
-                      center: latlng.LatLng(widget.carLocation.latitude,
-                          widget.carLocation.longitude),
+                      center: arguments['focusCar']
+                          ? latlng.LatLng(widget.carLocation.latitude,
+                              widget.carLocation.longitude)
+                          : latlng.LatLng(widget.houseLocation.latitude,
+                              widget.houseLocation.longitude),
                       zoom: 15.0,
                     ),
                     layers: [
@@ -82,7 +96,7 @@ class _CarLocationPageState extends State<CarLocationPage> {
                             point: latlng.LatLng(widget.carLocation.latitude,
                                 widget.carLocation.longitude),
                             builder: (ctx) => const Icon(
-                              Icons.add_location,
+                              Icons.location_on_sharp,
                               color: Colors.red,
                             ),
                           ),
@@ -90,7 +104,7 @@ class _CarLocationPageState extends State<CarLocationPage> {
                             point: latlng.LatLng(widget.houseLocation.latitude,
                                 widget.houseLocation.longitude),
                             builder: (ctx) => const Icon(
-                              Icons.location_city,
+                              Icons.location_city_rounded,
                               color: Colors.blue,
                             ),
                           ),

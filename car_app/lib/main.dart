@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 
-import './pages/house_location_page.dart';
 import './pages/cars_page.dart';
 import './pages/car_location_page.dart';
 import 'models/location.dart';
@@ -29,7 +28,6 @@ class MyApp extends StatelessWidget {
       routes: {
         CarLocationPage.routeName: (context) =>
             CarLocationPage(carLocation, houseLocation),
-        HouseLocationPage.routeName: (context) => HouseLocationPage(),
       },
     );
   }
