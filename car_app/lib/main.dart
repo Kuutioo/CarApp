@@ -1,5 +1,6 @@
 // ignore_for_file: use_key_in_widget_constructors
 
+import 'package:car_app/pages/pick_location_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -41,6 +42,12 @@ class _MyAppState extends State<MyApp> {
     address: '',
   );
 
+  Location initialLocation = Location(
+    latitude: -23.569953,
+    longitude: -46.635863,
+    address: '',
+  );
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -53,6 +60,8 @@ class _MyAppState extends State<MyApp> {
       routes: {
         '/': (context) => CarsPage(),
         MapPage.routeName: (context) => MapPage(carLocation, houseLocation),
+        PickLocationPage.routeName: (context) =>
+            PickLocationPage(initialLocation: initialLocation),
       },
     );
   }

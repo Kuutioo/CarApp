@@ -1,4 +1,5 @@
 // ignore_for_file: deprecated_member_use, use_key_in_widget_constructors
+import 'package:car_app/pages/map_page.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:location/location.dart';
@@ -6,7 +7,7 @@ import 'package:location/location.dart';
 import '../helpers/location_helper.dart';
 import '../widgets/main_drawer.dart';
 import '../widgets/car_item.dart';
-import '../models/notification.dart' as noti;
+import 'pick_location_page.dart';
 
 class CarsPage extends StatefulWidget {
   @override
@@ -15,7 +16,9 @@ class CarsPage extends StatefulWidget {
 
 class _CarsPageState extends State<CarsPage> {
   String? titleInput;
+
   String? imageInput;
+
   String? _previewImageUrl;
 
   Future<void> _getCurrentUserLocation() async {
@@ -79,17 +82,13 @@ class _CarsPageState extends State<CarsPage> {
                   children: [
                     ElevatedButton.icon(
                       icon: const Icon(
-                        Icons.location_on,
-                      ),
-                      label: const Text('Current Location'),
-                      onPressed: _getCurrentUserLocation,
-                    ),
-                    ElevatedButton.icon(
-                      icon: const Icon(
                         Icons.map,
                       ),
                       label: const Text('Select on Map'),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context)
+                            .pushNamed(PickLocationPage.routeName);
+                      },
                     ),
                   ],
                 ),
@@ -103,28 +102,6 @@ class _CarsPageState extends State<CarsPage> {
         );
       },
     );
-  }
-
-  bool? carAtHome(List<DocumentChange<Object?>> snapshotDocs) {
-    bool? isAtHome;
-    snapshotDocs.forEach((element) {
-      double latitude = element.doc.get('latitude');
-      double longitude = element.doc.get('longitude');
-
-      if (latitude <= 66.5049 &&
-          latitude >= 66.5029 &&
-          longitude <= 25.7304 &&
-          longitude >= 25.7284) {
-        isAtHome = true;
-      }
-
-      if (latitude >= 66.5049 ||
-          latitude <= 66.5029 && longitude >= 25.7304 ||
-          longitude <= 25.7284) {
-        isAtHome = false;
-      }
-    });
-    return isAtHome;
   }
 
   @override
@@ -151,26 +128,6 @@ class _CarsPageState extends State<CarsPage> {
             );
           }
           final documents = streamSnapshot.data!.docs;
-          final snapshotDocs = streamSnapshot.data!.docChanges;
-
-          snapshotDocs.forEach((element) {
-            bool? isCarAtHome = carAtHome(snapshotDocs);
-            String carName = element.doc.get('name');
-            if (isCarAtHome!) {
-              noti.Notification.showNotification(
-                title: '$carName at home',
-                body: 'Your car $carName has arrived at your home',
-                payload: '',
-              );
-            } else {
-              noti.Notification.showNotification(
-                title: '$carName left home',
-                body: 'Your car $carName has left your home',
-                payload: '',
-              );
-            }
-          });
-
           return CarItem(documents);
         },
       ),
