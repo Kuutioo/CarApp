@@ -1,4 +1,4 @@
-// ignore_for_file: dead_code
+// ignore_for_file: dead_code, use_key_in_widget_constructors, avoid_unnecessary_containers, must_be_immutable
 
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -34,7 +34,7 @@ class _PickLocationPageState extends State<PickLocationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Pick a place'),
+        title: const Text('Pick a place'),
         actions: [
           if (widget.isSelecting)
             IconButton(
@@ -43,7 +43,7 @@ class _PickLocationPageState extends State<PickLocationPage> {
                   : () {
                       Navigator.of(context).pop(_pickedLocation);
                     },
-              icon: Icon(Icons.check),
+              icon: const Icon(Icons.check),
             ),
         ],
       ),
@@ -67,7 +67,7 @@ class _PickLocationPageState extends State<PickLocationPage> {
               'id': 'mapbox.mapbox-streets-v8',
             },
             attributionBuilder: (_) {
-              return Text("© Done by demianescobar@gmail.com");
+              return const Text("© Done by demianescobar@gmail.com");
             },
           ),
           MarkerLayerOptions(
@@ -79,7 +79,7 @@ class _PickLocationPageState extends State<PickLocationPage> {
                       point: latlng.LatLng(widget.initialLocation.latitude,
                           widget.initialLocation.longitude),
                       builder: (ctx) => Container(
-                        child: Icon(Icons.add_location),
+                        child: const Icon(Icons.add_location),
                       ),
                     ),
                   ]
@@ -92,7 +92,7 @@ class _PickLocationPageState extends State<PickLocationPage> {
                       //point:  latlng.LatLng(-23.5732052, -46.6331934),
 
                       builder: (ctx) => Container(
-                        child: Icon(Icons.add_location),
+                        child: const Icon(Icons.add_location),
                       ),
                     ),
                   ],
