@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../pages/car_location_page.dart';
+import '../pages/map_page.dart';
 import '../models/location.dart';
 
 class CarItem extends StatelessWidget {
@@ -65,7 +65,7 @@ class CarItem extends StatelessWidget {
                 }
                 Navigator.pushNamed(
                   context,
-                  CarLocationPage.routeName,
+                  MapPage.routeName,
                   arguments: {
                     'carLocation': carLocation,
                     'houseLocation': houseLocation,

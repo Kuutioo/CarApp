@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 import './pages/cars_page.dart';
-import './pages/car_location_page.dart';
+import 'pages/map_page.dart';
 import 'models/location.dart';
 
 void main() async {
@@ -34,8 +34,7 @@ class MyApp extends StatelessWidget {
       ),
       home: CarsPage(),
       routes: {
-        CarLocationPage.routeName: (context) =>
-            CarLocationPage(carLocation, houseLocation),
+        MapPage.routeName: (context) => MapPage(carLocation, houseLocation),
       },
     );
   }

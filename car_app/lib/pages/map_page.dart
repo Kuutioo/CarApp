@@ -8,18 +8,18 @@ import '../models/location.dart';
 import '../helpers/location_helper.dart';
 import '../widgets/main_drawer.dart';
 
-class CarLocationPage extends StatefulWidget {
+class MapPage extends StatefulWidget {
   static const routeName = 'car-location-page';
 
   final Location carLocation;
   final Location houseLocation;
-  CarLocationPage(this.carLocation, this.houseLocation);
+  MapPage(this.carLocation, this.houseLocation);
 
   @override
-  State<CarLocationPage> createState() => _CarLocationPageState();
+  State<MapPage> createState() => _MapPageState();
 }
 
-class _CarLocationPageState extends State<CarLocationPage> {
+class _MapPageState extends State<MapPage> {
   static const STYLE_KEY =
       'pk.eyJ1IjoiYXBpbmFtZXN0YXJpMTIiLCJhIjoiY2wzYmJ0Ynk3MGM1ZDNjb2lkeTNpbDY5YiJ9.IqeKa6IY3F3Eu-faaPyMrQ';
 
