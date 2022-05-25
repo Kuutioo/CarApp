@@ -39,6 +39,7 @@ class _CarLocationPageState extends State<CarLocationPage> {
   Widget build(BuildContext context) {
     final arguments =
         ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+
     widget.carLocation.latitude = arguments['carLocation']!.latitude;
     widget.carLocation.longitude = arguments['carLocation']!.longitude;
 
@@ -94,6 +95,7 @@ class _CarLocationPageState extends State<CarLocationPage> {
                                 widget.carLocation.longitude),
                             builder: (ctx) => const Icon(
                               Icons.location_on_sharp,
+                              size: 30,
                               color: Colors.red,
                             ),
                           ),
