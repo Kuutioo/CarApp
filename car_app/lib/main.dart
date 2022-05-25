@@ -14,8 +14,16 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  Location carLocation = Location(latitude: 0, longitude: 0, address: '');
-  Location houseLocation = Location(latitude: 0, longitude: 0, address: '');
+  final Location carLocation = Location(
+    latitude: 0,
+    longitude: 0,
+    address: '',
+  );
+  final Location houseLocation = Location(
+    latitude: 0,
+    longitude: 0,
+    address: '',
+  );
 
   @override
   Widget build(BuildContext context) {

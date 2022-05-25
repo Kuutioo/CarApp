@@ -11,8 +11,8 @@ import '../widgets/main_drawer.dart';
 class CarLocationPage extends StatefulWidget {
   static const routeName = 'car-location-page';
 
-  Location carLocation;
-  Location houseLocation;
+  final Location carLocation;
+  final Location houseLocation;
   CarLocationPage(this.carLocation, this.houseLocation);
 
   @override
@@ -44,9 +44,6 @@ class _CarLocationPageState extends State<CarLocationPage> {
 
     widget.houseLocation.latitude = arguments['houseLocation']!.latitude;
     widget.houseLocation.longitude = arguments['houseLocation']!.longitude;
-
-    print(widget.carLocation.latitude);
-    print(widget.carLocation.longitude);
 
     if (address == null) {
       if (arguments['focusCar']) {
