@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 import './pages/cars_page.dart';
-import 'pages/map_page.dart';
-import 'models/location.dart';
+import './pages/map_page.dart';
+import './models/location.dart';
+import './models/notification.dart' as noti;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,12 +14,27 @@ void main() async {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    super.initState();
+    noti.Notification.initState();
+    listenNotifications();
+  }
+
+  void listenNotifications() => noti.Notification.onNotifications;
+
   final Location carLocation = Location(
     latitude: 0,
     longitude: 0,
     address: '',
   );
+
   final Location houseLocation = Location(
     latitude: 0,
     longitude: 0,
@@ -28,12 +44,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Cars App',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: CarsPage(),
+      initialRoute: '/',
       routes: {
+        '/': (context) => CarsPage(),
         MapPage.routeName: (context) => MapPage(carLocation, houseLocation),
       },
     );

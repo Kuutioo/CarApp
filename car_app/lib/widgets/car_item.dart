@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../pages/map_page.dart';
 import '../models/location.dart';
+import '../models/notification.dart' as noti;
 
 class CarItem extends StatelessWidget {
   final documents;
@@ -63,6 +64,11 @@ class CarItem extends StatelessWidget {
                     carLocation!.longitude >= 25.7284) {
                   print('Car at home');
                 }
+                noti.Notification.showNotification(
+                  title: 'Test',
+                  body: 'Test text if work',
+                  payload: '',
+                );
                 Navigator.pushNamed(
                   context,
                   MapPage.routeName,
