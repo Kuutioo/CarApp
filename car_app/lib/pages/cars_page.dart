@@ -6,6 +6,7 @@ import 'package:location/location.dart';
 import '../helpers/location_helper.dart';
 import '../widgets/main_drawer.dart';
 import '../widgets/car_item.dart';
+import '../models/notification.dart' as noti;
 
 class CarsPage extends StatefulWidget {
   @override
@@ -14,9 +15,7 @@ class CarsPage extends StatefulWidget {
 
 class _CarsPageState extends State<CarsPage> {
   String? titleInput;
-
   String? imageInput;
-
   String? _previewImageUrl;
 
   Future<void> _getCurrentUserLocation() async {
@@ -106,6 +105,28 @@ class _CarsPageState extends State<CarsPage> {
     );
   }
 
+  bool? carAtHome(List<DocumentChange<Object?>> snapshotDocs) {
+    bool? isAtHome;
+    snapshotDocs.forEach((element) {
+      double latitude = element.doc.get('latitude');
+      double longitude = element.doc.get('longitude');
+
+      if (latitude <= 66.5049 &&
+          latitude >= 66.5029 &&
+          longitude <= 25.7304 &&
+          longitude >= 25.7284) {
+        isAtHome = true;
+      }
+
+      if (latitude >= 66.5049 ||
+          latitude <= 66.5029 && longitude >= 25.7304 ||
+          longitude <= 25.7284) {
+        isAtHome = false;
+      }
+    });
+    return isAtHome;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -130,6 +151,26 @@ class _CarsPageState extends State<CarsPage> {
             );
           }
           final documents = streamSnapshot.data!.docs;
+          final snapshotDocs = streamSnapshot.data!.docChanges;
+
+          snapshotDocs.forEach((element) {
+            bool? isCarAtHome = carAtHome(snapshotDocs);
+            String carName = element.doc.get('name');
+            if (isCarAtHome!) {
+              noti.Notification.showNotification(
+                title: '$carName at home',
+                body: 'Your car $carName has arrived at your home',
+                payload: '',
+              );
+            } else {
+              noti.Notification.showNotification(
+                title: '$carName left home',
+                body: 'Your car $carName has left your home',
+                payload: '',
+              );
+            }
+          });
+
           return CarItem(documents);
         },
       ),

@@ -58,17 +58,6 @@ class CarItem extends StatelessWidget {
                 carLocation?.latitude = documents[index]['latitude'];
                 carLocation?.longitude = documents[index]['longitude'];
 
-                if (carLocation!.latitude <= 66.5049 &&
-                    carLocation!.latitude >= 66.5029 &&
-                    carLocation!.longitude <= 25.7304 &&
-                    carLocation!.longitude >= 25.7284) {
-                  print('Car at home');
-                }
-                noti.Notification.showNotification(
-                  title: 'Test',
-                  body: 'Test text if work',
-                  payload: '',
-                );
                 Navigator.pushNamed(
                   context,
                   MapPage.routeName,

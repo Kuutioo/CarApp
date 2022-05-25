@@ -36,6 +36,12 @@ class _MapPageState extends State<MapPage> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    address = null;
+  }
+
+  @override
   Widget build(BuildContext context) {
     final arguments =
         ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
