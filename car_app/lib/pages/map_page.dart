@@ -92,29 +92,45 @@ class _MapPageState extends State<MapPage> {
                           'id': 'mapbox.mapbox-streets-v8',
                         },
                       ),
-                      MarkerLayerOptions(
-                        markers: [
-                          Marker(
-                            width: 30.0,
-                            height: 30.0,
-                            point: latlng.LatLng(widget.carLocation.latitude,
-                                widget.carLocation.longitude),
-                            builder: (ctx) => const Icon(
-                              Icons.location_on_sharp,
-                              size: 30,
-                              color: Colors.red,
+                      arguments['focusCar']
+                          ? MarkerLayerOptions(
+                              markers: [
+                                Marker(
+                                  width: 30.0,
+                                  height: 30.0,
+                                  point: latlng.LatLng(
+                                      widget.carLocation.latitude,
+                                      widget.carLocation.longitude),
+                                  builder: (ctx) => const Icon(
+                                    Icons.location_on_sharp,
+                                    size: 30,
+                                    color: Colors.red,
+                                  ),
+                                ),
+                                Marker(
+                                  point: latlng.LatLng(
+                                      widget.houseLocation.latitude,
+                                      widget.houseLocation.longitude),
+                                  builder: (ctx) => const Icon(
+                                    Icons.location_city_rounded,
+                                    color: Colors.blue,
+                                  ),
+                                ),
+                              ],
+                            )
+                          : MarkerLayerOptions(
+                              markers: [
+                                Marker(
+                                  point: latlng.LatLng(
+                                      widget.houseLocation.latitude,
+                                      widget.houseLocation.longitude),
+                                  builder: (ctx) => const Icon(
+                                    Icons.location_city_rounded,
+                                    color: Colors.blue,
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                          Marker(
-                            point: latlng.LatLng(widget.houseLocation.latitude,
-                                widget.houseLocation.longitude),
-                            builder: (ctx) => const Icon(
-                              Icons.location_city_rounded,
-                              color: Colors.blue,
-                            ),
-                          ),
-                        ],
-                      ),
                       CircleLayerOptions(
                         circles: [
                           CircleMarker(

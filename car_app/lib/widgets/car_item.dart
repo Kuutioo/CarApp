@@ -5,7 +5,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../pages/map_page.dart';
 import '../models/location.dart';
-import '../models/notification.dart' as noti;
 
 class CarItem extends StatelessWidget {
   final documents;
