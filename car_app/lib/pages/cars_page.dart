@@ -1,9 +1,11 @@
 // ignore_for_file: deprecated_member_use, use_key_in_widget_constructors
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
 
 import '../helpers/location_helper.dart';
+import '../models/location.dart' as loc;
 import '../widgets/main_drawer.dart';
 import '../widgets/car_item.dart';
 import '../models/notification.dart' as noti;
@@ -26,6 +28,33 @@ class _CarsPageState extends State<CarsPage> {
     final staticMapImageUrl = LocationHelper.generateLocationPreviewImage(
       latitude: locData.latitude,
       longitude: locData.longitude,
+    );
+    setState(() {
+      _previewImageUrl = staticMapImageUrl;
+    });
+  }
+
+  Future<void> _selectOnMap() async {
+    final LatLng selectedLocation = await Navigator.of(context).push(
+      MaterialPageRoute(
+        fullscreenDialog: true,
+        builder: (ctx) => PickLocationPage(
+          initialLocation: loc.Location(
+            latitude: -23.569953,
+            longitude: -46.635863,
+            address: '',
+          ),
+          isSelecting: true,
+        ),
+      ),
+    );
+    if (selectedLocation == null) {
+      return;
+    }
+    print(selectedLocation);
+    final staticMapImageUrl = LocationHelper.generateLocationPreviewImage(
+      latitude: selectedLocation.latitude,
+      longitude: selectedLocation.longitude,
     );
     setState(() {
       _previewImageUrl = staticMapImageUrl;
@@ -86,8 +115,7 @@ class _CarsPageState extends State<CarsPage> {
                       ),
                       label: const Text('Select on Map'),
                       onPressed: () {
-                        Navigator.of(context)
-                            .pushNamed(PickLocationPage.routeName);
+                        _selectOnMap();
                       },
                     ),
                   ],
