@@ -1,4 +1,9 @@
 // ignore_for_file: deprecated_member_use, use_key_in_widget_constructors, unnecessary_null_comparison
+
+// This whole script is kinda a mess
+// Please don't mind
+// This is our first flutter app without following a tutorial through the whole app
+
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:latlong2/latlong.dart';
@@ -57,6 +62,7 @@ class _CarsPageState extends State<CarsPage> {
     );
   }
 
+  // Select location on map when creating car.
   Future<void> _selectOnMap() async {
     selectedLocation = await Navigator.of(context).push(
       MaterialPageRoute(
@@ -83,6 +89,7 @@ class _CarsPageState extends State<CarsPage> {
     });
   }
 
+  // Sheet to add new car. Name, Image url, location
   void startAddNewCar(BuildContext ctx) {
     showModalBottomSheet(
       context: ctx,
@@ -95,14 +102,14 @@ class _CarsPageState extends State<CarsPage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 TextField(
-                  decoration: const InputDecoration(labelText: 'Car name'),
+                  decoration: const InputDecoration(labelText: 'Car Name'),
                   onChanged: (val) {
                     titleInput = val;
                   },
                 ),
                 TextField(
                   keyboardType: TextInputType.url,
-                  decoration: const InputDecoration(labelText: 'Image url'),
+                  decoration: const InputDecoration(labelText: 'Image Url'),
                   onChanged: (val) => imageInput = val,
                 ),
                 SizedBox(
@@ -159,6 +166,7 @@ class _CarsPageState extends State<CarsPage> {
     );
   }
 
+  // Add car to Firebase
   Future<void> addCar() {
     return cars.add({
       'name': titleInput,
@@ -173,7 +181,12 @@ class _CarsPageState extends State<CarsPage> {
     return Scaffold(
       appBar: NewGradientAppBar(
         gradient: CarsPage.linearGradient,
-        title: const Text('Your Cars'),
+        title: const Text(
+          'Your Cars',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         actions: [
           IconButton(
             icon: const Icon(Icons.add),
@@ -210,6 +223,9 @@ class _CarsPageState extends State<CarsPage> {
     );
   }
 
+  // PLEASE DO NOT EVEN THINK ABOUT READING THIS PART OF THE CODE
+  // IT IS A FUCKING MESS
+  // JUST COMPLETE NONSENSE AND IT DOENSN'T EVEN WORK CORRECTLY, MAYBE I DON'T KNOW!
   Future<void> _sendNotification(
       DocumentChange<Map<String, dynamic>> element) async {
     String carName = element.doc.get('name');
@@ -223,6 +239,9 @@ class _CarsPageState extends State<CarsPage> {
         } else {
           if (latitude != carList[i]['latitude'] ||
               longitude != carList[i]['longitude']) {
+            // YAY THIS LATITUDE AND LONGITUDE CALCULATION MAKES SO MUCH SENSE
+            // IT ACTUALLY TOOK 2 HOURS TO CALCULATE THIS.
+            // AND THIS CALCULATION EXPECTS THAT YOU LIVE AT THE EQUATOR
             if (latitude <= 66.5049 &&
                 latitude >= 66.5029 &&
                 longitude <= 25.7304 &&
@@ -238,6 +257,8 @@ class _CarsPageState extends State<CarsPage> {
                 carList[i]['longitude'] = longitude;
               }
             }
+            // SAME DUMB LATITUDE ANG LONGITUDE CALCULATION
+            // SO MUCH FUN XDDDDDDDDDDDDDD !!!!!!!!!!!!!!!!
             if (latitude >= 66.5049 ||
                 latitude <= 66.5029 && longitude >= 25.7304 ||
                 longitude <= 25.7284) {

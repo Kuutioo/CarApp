@@ -1,5 +1,10 @@
 // ignore_for_file: use_key_in_widget_constructors
 
+// Our first flutter app without following a tutorial
+// Big mess
+// But works (kinda)
+// Some bugs here and there but generally it's fine
+
 import 'package:car_app/pages/pick_location_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';

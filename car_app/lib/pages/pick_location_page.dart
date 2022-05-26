@@ -1,5 +1,9 @@
 // ignore_for_file: dead_code, use_key_in_widget_constructors, avoid_unnecessary_containers, must_be_immutable
 
+// This script is basically a copy of map_page.dart
+// They couldn't be combined easily I guess
+// Otherwise it would have been a completely overengireened.
+
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 

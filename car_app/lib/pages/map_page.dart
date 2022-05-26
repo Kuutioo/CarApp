@@ -40,6 +40,8 @@ class _MapPageState extends State<MapPage> {
   @override
   void dispose() {
     super.dispose();
+
+    // Maybe dispose idk caused a memory leak for some reason.
     address = null;
   }
 
@@ -48,6 +50,7 @@ class _MapPageState extends State<MapPage> {
     final arguments =
         ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
 
+    // Arguments go brrrrrrr
     widget.carLocation.latitude = arguments['carLocation']!.latitude;
     widget.carLocation.longitude = arguments['carLocation']!.longitude;
 
