@@ -1,4 +1,4 @@
-// ignore_for_file: deprecated_member_use, use_key_in_widget_constructors
+// ignore_for_file: deprecated_member_use, use_key_in_widget_constructors, unnecessary_null_comparison
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:latlong2/latlong.dart';
@@ -55,7 +55,6 @@ class _CarsPageState extends State<CarsPage> {
         }
       },
     );
-    print('added to list');
   }
 
   Future<void> _selectOnMap() async {
@@ -98,9 +97,7 @@ class _CarsPageState extends State<CarsPage> {
                 TextField(
                   decoration: const InputDecoration(labelText: 'Car name'),
                   onChanged: (val) {
-                    print('val: $val');
                     titleInput = val;
-                    print('TitleInput: $titleInput');
                   },
                 ),
                 TextField(
@@ -150,7 +147,6 @@ class _CarsPageState extends State<CarsPage> {
                 ElevatedButton(
                   child: const Text('Add car'),
                   onPressed: () {
-                    print('TitleInput: $titleInput');
                     addCar();
                     Navigator.of(context).pop();
                   },
@@ -197,9 +193,17 @@ class _CarsPageState extends State<CarsPage> {
             );
           }
           final documents = streamSnapshot.data!.docs;
-          final snapshotDocs = streamSnapshot.data!.docChanges;
+          //final snapshotDocs = streamSnapshot.data!.docChanges;
+          FirebaseFirestore.instance
+              .collection('cars')
+              .snapshots()
+              .listen((event) {
+            for (var element in event.docChanges) {
+              _sendNotification(element);
+            }
+          });
+          if (streamSnapshot.hasData) {}
 
-          _sendNotification(snapshotDocs);
           return CarItem(documents);
         },
       ),
@@ -207,44 +211,45 @@ class _CarsPageState extends State<CarsPage> {
   }
 
   Future<void> _sendNotification(
-      List<DocumentChange<Object?>> snapshotDocs) async {
-    for (var element in snapshotDocs) {
-      String carName = element.doc.get('name');
-      var latitude = element.doc.get('latitude');
-      var longitude = element.doc.get('longitude');
+      DocumentChange<Map<String, dynamic>> element) async {
+    String carName = element.doc.get('name');
+    var latitude = element.doc.get('latitude');
+    var longitude = element.doc.get('longitude');
 
-      for (var i = 0; i < carList.length; i++) {
-        if (carName == carList[i]['name']) {
-          if (latitude == carList[i]['latitude'] &&
-              longitude == carList[i]['longitude']) {
-            print('Car hasn\'t moved since last check');
-          } else {
-            if (latitude != carList[i]['latitude'] ||
-                longitude != carList[i]['longitude']) {
-              if (latitude <= 66.5049 &&
-                  latitude >= 66.5029 &&
-                  longitude <= 25.7304 &&
-                  longitude >= 25.7284) {
-                if (!carList[i]['carAtHome']) {
-                  await noti.Notification.showNotification(
-                    title: '$carName at home',
-                    body: 'Your car $carName has arrived at your home',
-                    payload: '',
-                  );
-                  carList[i]['carAtHome'] = true;
-                }
+    for (var i = 0; i < carList.length; i++) {
+      if (carName == carList[i]['name']) {
+        if (latitude == carList[i]['latitude'] &&
+            longitude == carList[i]['longitude']) {
+        } else {
+          if (latitude != carList[i]['latitude'] ||
+              longitude != carList[i]['longitude']) {
+            if (latitude <= 66.5049 &&
+                latitude >= 66.5029 &&
+                longitude <= 25.7304 &&
+                longitude >= 25.7284) {
+              if (!carList[i]['carAtHome']) {
+                await noti.Notification.showNotification(
+                  title: '$carName at home',
+                  body: 'Your car $carName has arrived at your home',
+                  payload: '',
+                );
+                carList[i]['carAtHome'] = true;
+                carList[i]['latitude'] = latitude;
+                carList[i]['longitude'] = longitude;
               }
-              if (latitude >= 66.5049 ||
-                  latitude <= 66.5029 && longitude >= 25.7304 ||
-                  longitude <= 25.7284) {
-                if (carList[i]['carAtHome']) {
-                  await noti.Notification.showNotification(
-                    title: '$carName left home',
-                    body: 'Your car $carName has left your home',
-                    payload: '',
-                  );
-                  carList[i]['carAtHome'] = false;
-                }
+            }
+            if (latitude >= 66.5049 ||
+                latitude <= 66.5029 && longitude >= 25.7304 ||
+                longitude <= 25.7284) {
+              if (carList[i]['carAtHome']) {
+                await noti.Notification.showNotification(
+                  title: '$carName left home',
+                  body: 'Your car $carName has left your home',
+                  payload: '',
+                );
+                carList[i]['carAtHome'] = false;
+                carList[i]['latitude'] = latitude;
+                carList[i]['longitude'] = longitude;
               }
             }
           }
