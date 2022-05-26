@@ -55,6 +55,7 @@ class _CarsPageState extends State<CarsPage> {
         }
       },
     );
+    print('added to list');
   }
 
   Future<void> _selectOnMap() async {
@@ -200,9 +201,9 @@ class _CarsPageState extends State<CarsPage> {
     );
   }
 
-  void _sendNotification(List<DocumentChange<Object?>> snapshotDocs) {
+  Future<void> _sendNotification(
+      List<DocumentChange<Object?>> snapshotDocs) async {
     for (var element in snapshotDocs) {
-      //bool? isCarAtHome = carAtHome(snapshotDocs);
       String carName = element.doc.get('name');
       var latitude = element.doc.get('latitude');
       var longitude = element.doc.get('longitude');
@@ -214,13 +215,13 @@ class _CarsPageState extends State<CarsPage> {
             print('Car hasn\'t moved since last check');
           } else {
             if (latitude != carList[i]['latitude'] ||
-                longitude != carList[i]['latitude']) {
+                longitude != carList[i]['longitude']) {
               if (latitude <= 66.5049 &&
                   latitude >= 66.5029 &&
                   longitude <= 25.7304 &&
                   longitude >= 25.7284) {
                 if (!carList[i]['carAtHome']) {
-                  noti.Notification.showNotification(
+                  await noti.Notification.showNotification(
                     title: '$carName at home',
                     body: 'Your car $carName has arrived at your home',
                     payload: '',
@@ -232,7 +233,7 @@ class _CarsPageState extends State<CarsPage> {
                   latitude <= 66.5029 && longitude >= 25.7304 ||
                   longitude <= 25.7284) {
                 if (carList[i]['carAtHome']) {
-                  noti.Notification.showNotification(
+                  await noti.Notification.showNotification(
                     title: '$carName left home',
                     body: 'Your car $carName has left your home',
                     payload: '',
