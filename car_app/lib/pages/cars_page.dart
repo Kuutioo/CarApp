@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 
 import '../helpers/location_helper.dart';
 import '../models/location.dart' as loc;
@@ -11,6 +12,18 @@ import '../models/notification.dart' as noti;
 import 'pick_location_page.dart';
 
 class CarsPage extends StatefulWidget {
+  static const linearGradient = LinearGradient(
+    colors: [
+      Colors.red,
+      Colors.orange,
+      Colors.yellow,
+      Colors.green,
+      Colors.blue,
+      Colors.purple
+    ],
+    begin: FractionalOffset(-0.1, 0.0),
+    end: FractionalOffset(1.1, 0.0),
+  );
   @override
   State<CarsPage> createState() => _CarsPageState();
 }
@@ -156,7 +169,8 @@ class _CarsPageState extends State<CarsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      appBar: NewGradientAppBar(
+        gradient: CarsPage.linearGradient,
         title: const Text('Your Cars'),
         actions: [
           IconButton(
