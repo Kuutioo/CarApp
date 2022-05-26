@@ -21,15 +21,15 @@ class PickLocationPage extends StatefulWidget {
 class _PickLocationPageState extends State<PickLocationPage> {
   latlng.LatLng? _pickedLocation;
 
-  void _retPositionMap(dynamic positio, latlng.LatLng direct) {
+  /*void _retPositionMap(dynamic positio, latlng.LatLng direct) {
     setState(() {
       _pickedLocation = direct;
-      //print(_pickedLocation!.latitude);
+      print(_pickedLocation!.latitude);
     });
-    //print(positio.runtimeType);
-    // print(direct.latitude);
-    // print(direct.longitude);
-  }
+    print(positio.runtimeType);
+    print(direct.latitude);
+    print(direct.longitude);
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -71,9 +71,6 @@ class _PickLocationPageState extends State<PickLocationPage> {
               'accessToken':
                   'pk.eyJ1Ijoicm9uYW5pdCIsImEiOiJjbDNiZDdkY2MwNmRpM2NxbmFremxpZGRjIn0.8OROSfi-lqxWNZsgRc2M8w',
               'id': 'mapbox.mapbox-streets-v8',
-            },
-            attributionBuilder: (_) {
-              return const Text("© Done by demianescobar@gmail.com");
             },
           ),
           MarkerLayerOptions(

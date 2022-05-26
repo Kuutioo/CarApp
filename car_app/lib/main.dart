@@ -45,8 +45,8 @@ class _MyAppState extends State<MyApp> {
   );
 
   Location initialLocation = Location(
-    latitude: -23.569953,
-    longitude: -46.635863,
+    latitude: 66.5039,
+    longitude: 25.7294,
     address: '',
   );
 
