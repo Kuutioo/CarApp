@@ -52,11 +52,12 @@ class MainDrawer extends StatelessWidget {
             child: Column(
               children: [
                 Container(
+                  decoration:
+                      const BoxDecoration(gradient: CarsPage.linearGradient),
                   height: 80,
                   width: double.infinity,
                   padding: const EdgeInsets.all(15),
                   alignment: Alignment.centerLeft,
-                  color: Theme.of(context).primaryColor,
                   child: const Padding(
                     padding: EdgeInsets.all(10.0),
                     child: Text(

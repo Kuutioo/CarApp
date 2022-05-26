@@ -21,16 +21,6 @@ class PickLocationPage extends StatefulWidget {
 class _PickLocationPageState extends State<PickLocationPage> {
   latlng.LatLng? _pickedLocation;
 
-  /*void _retPositionMap(dynamic positio, latlng.LatLng direct) {
-    setState(() {
-      _pickedLocation = direct;
-      print(_pickedLocation!.latitude);
-    });
-    print(positio.runtimeType);
-    print(direct.latitude);
-    print(direct.longitude);
-  }*/
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

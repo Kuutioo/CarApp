@@ -9,7 +9,7 @@ import '../models/location.dart' as loc;
 import '../widgets/main_drawer.dart';
 import '../widgets/car_item.dart';
 import '../models/notification.dart' as noti;
-import 'pick_location_page.dart';
+import './pick_location_page.dart';
 
 class CarsPage extends StatefulWidget {
   static const linearGradient = LinearGradient(
@@ -97,7 +97,11 @@ class _CarsPageState extends State<CarsPage> {
               children: [
                 TextField(
                   decoration: const InputDecoration(labelText: 'Car name'),
-                  onChanged: (val) => titleInput = val,
+                  onChanged: (val) {
+                    print('val: $val');
+                    titleInput = val;
+                    print('TitleInput: $titleInput');
+                  },
                 ),
                 TextField(
                   keyboardType: TextInputType.url,
@@ -146,6 +150,7 @@ class _CarsPageState extends State<CarsPage> {
                 ElevatedButton(
                   child: const Text('Add car'),
                   onPressed: () {
+                    print('TitleInput: $titleInput');
                     addCar();
                     Navigator.of(context).pop();
                   },
