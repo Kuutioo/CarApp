@@ -1,8 +1,10 @@
 // ignore_for_file: prefer_const_constructors_in_immutables, use_key_in_widget_constructors, dead_code, constant_identifier_names
 
+import 'package:car_app/pages/cars_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart' as latlng;
+import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 
 import '../models/location.dart';
 import '../helpers/location_helper.dart';
@@ -62,7 +64,8 @@ class _MapPageState extends State<MapPage> {
     }
 
     return Scaffold(
-        appBar: AppBar(
+        appBar: NewGradientAppBar(
+          gradient: CarsPage.linearGradient,
           title: arguments['focusCar']
               ? const Text('Your Car Location')
               : const Text('Your House Location'),

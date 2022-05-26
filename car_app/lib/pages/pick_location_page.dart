@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 
 import 'package:latlong2/latlong.dart' as latlng;
+import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 import '../models/location.dart';
+import 'cars_page.dart';
 
 class PickLocationPage extends StatefulWidget {
   static const routeName = 'pick-location-page';
@@ -32,7 +34,8 @@ class _PickLocationPageState extends State<PickLocationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      appBar: NewGradientAppBar(
+        gradient: CarsPage.linearGradient,
         title: const Text('Pick a place'),
         actions: [
           if (widget.isSelecting)

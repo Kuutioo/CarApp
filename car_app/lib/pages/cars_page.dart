@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
+import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 
 import '../helpers/location_helper.dart';
 import '../models/location.dart' as loc;
@@ -12,6 +13,19 @@ import '../models/notification.dart' as noti;
 import 'pick_location_page.dart';
 
 class CarsPage extends StatefulWidget {
+  static const linearGradient = LinearGradient(
+    colors: [
+      Colors.red,
+      Colors.orange,
+      Colors.yellow,
+      Colors.green,
+      Colors.blue,
+      Colors.purple
+    ],
+    begin: FractionalOffset(-0.1, 0.0),
+    end: FractionalOffset(1.1, 0.0),
+  );
+
   @override
   State<CarsPage> createState() => _CarsPageState();
 }
@@ -34,130 +48,131 @@ class _CarsPageState extends State<CarsPage> {
     });
   }
 
-  Future<void> _selectOnMap() async {
-    final LatLng selectedLocation = await Navigator.of(context).push(
-      MaterialPageRoute(
-        fullscreenDialog: true,
-        builder: (ctx) => PickLocationPage(
-          initialLocation: loc.Location(
-            latitude: -23.569953,
-            longitude: -46.635863,
-            address: '',
-          ),
-          isSelecting: true,
-        ),
-      ),
-    );
-    if (selectedLocation == null) {
-      return;
-    }
-    print(selectedLocation);
-    final staticMapImageUrl = LocationHelper.generateLocationPreviewImage(
-      latitude: selectedLocation.latitude,
-      longitude: selectedLocation.longitude,
-    );
-    setState(() {
-      _previewImageUrl = staticMapImageUrl;
-    });
-  }
-
-  void startAddNewCar(BuildContext ctx) {
-    showModalBottomSheet(
-      context: ctx,
-      builder: (_) {
-        return Card(
-          elevation: 5,
-          child: Container(
-            padding: const EdgeInsets.all(10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                TextField(
-                  decoration: const InputDecoration(labelText: 'Car name'),
-                  onChanged: (val) => titleInput = val,
-                ),
-                TextField(
-                  keyboardType: TextInputType.url,
-                  decoration: const InputDecoration(labelText: 'Image url'),
-                  onChanged: (val) => imageInput = val,
-                ),
-                SizedBox(
-                  height: 150,
-                  child: Container(
-                    margin: const EdgeInsets.all(15),
-                    height: 150,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        width: 1,
-                        color: Colors.grey,
-                      ),
-                    ),
-                    width: double.infinity,
-                    alignment: Alignment.center,
-                    child: _previewImageUrl == null
-                        ? const Text(
-                            'No Location Chosen',
-                            textAlign: TextAlign.center,
-                          )
-                        : Image.network(
-                            _previewImageUrl!,
-                            fit: BoxFit.cover,
-                            width: double.infinity,
-                          ),
-                  ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    ElevatedButton.icon(
-                      icon: const Icon(
-                        Icons.map,
-                      ),
-                      label: const Text('Select on Map'),
-                      onPressed: () {
-                        _selectOnMap();
-                      },
-                    ),
-                  ],
-                ),
-                ElevatedButton(
-                  child: const Text('Add car'),
-                  onPressed: () {},
-                )
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
-
-  bool? carAtHome(List<DocumentChange<Object?>> snapshotDocs) {
-    bool? isAtHome;
-    for (var element in snapshotDocs) {
-      double latitude = element.doc.get('latitude');
-      double longitude = element.doc.get('longitude');
-
-      if (latitude <= 66.5049 &&
-          latitude >= 66.5029 &&
-          longitude <= 25.7304 &&
-          longitude >= 25.7284) {
-        isAtHome = true;
-      }
-
-      if (latitude >= 66.5049 ||
-          latitude <= 66.5029 && longitude >= 25.7304 ||
-          longitude <= 25.7284) {
-        isAtHome = false;
-      }
-    }
-    return isAtHome;
-  }
-
   @override
   Widget build(BuildContext context) {
+    Future<void> _selectOnMap() async {
+      final LatLng selectedLocation = await Navigator.of(context).push(
+        MaterialPageRoute(
+          fullscreenDialog: true,
+          builder: (ctx) => PickLocationPage(
+            initialLocation: loc.Location(
+              latitude: -23.569953,
+              longitude: -46.635863,
+              address: '',
+            ),
+            isSelecting: true,
+          ),
+        ),
+      );
+      if (selectedLocation == null) {
+        return;
+      }
+      print(selectedLocation);
+      final staticMapImageUrl = LocationHelper.generateLocationPreviewImage(
+        latitude: selectedLocation.latitude,
+        longitude: selectedLocation.longitude,
+      );
+      setState(() {
+        _previewImageUrl = staticMapImageUrl;
+      });
+    }
+
+    void startAddNewCar(BuildContext ctx) {
+      showModalBottomSheet(
+        context: ctx,
+        builder: (_) {
+          return Card(
+            elevation: 5,
+            child: Container(
+              padding: const EdgeInsets.all(10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  TextField(
+                    decoration: const InputDecoration(labelText: 'Car name'),
+                    onChanged: (val) => titleInput = val,
+                  ),
+                  TextField(
+                    keyboardType: TextInputType.url,
+                    decoration: const InputDecoration(labelText: 'Image url'),
+                    onChanged: (val) => imageInput = val,
+                  ),
+                  SizedBox(
+                    height: 150,
+                    child: Container(
+                      margin: const EdgeInsets.all(15),
+                      height: 150,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          width: 1,
+                          color: Colors.grey,
+                        ),
+                      ),
+                      width: double.infinity,
+                      alignment: Alignment.center,
+                      child: _previewImageUrl == null
+                          ? const Text(
+                              'No Location Chosen',
+                              textAlign: TextAlign.center,
+                            )
+                          : Image.network(
+                              _previewImageUrl!,
+                              fit: BoxFit.cover,
+                              width: double.infinity,
+                            ),
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      ElevatedButton.icon(
+                        icon: const Icon(
+                          Icons.map,
+                        ),
+                        label: const Text('Select on Map'),
+                        onPressed: () {
+                          _selectOnMap();
+                        },
+                      ),
+                    ],
+                  ),
+                  ElevatedButton(
+                    child: const Text('Add car'),
+                    onPressed: () {},
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      );
+    }
+
+    bool? carAtHome(List<DocumentChange<Object?>> snapshotDocs) {
+      bool? isAtHome;
+      for (var element in snapshotDocs) {
+        double latitude = element.doc.get('latitude');
+        double longitude = element.doc.get('longitude');
+
+        if (latitude <= 66.5049 &&
+            latitude >= 66.5029 &&
+            longitude <= 25.7304 &&
+            longitude >= 25.7284) {
+          isAtHome = true;
+        }
+
+        if (latitude >= 66.5049 ||
+            latitude <= 66.5029 && longitude >= 25.7304 ||
+            longitude <= 25.7284) {
+          isAtHome = false;
+        }
+      }
+      return isAtHome;
+    }
+
     return Scaffold(
-      appBar: AppBar(
+      appBar: NewGradientAppBar(
+        gradient: CarsPage.linearGradient,
         title: const Text('Your Cars'),
         actions: [
           IconButton(
