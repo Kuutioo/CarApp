@@ -58,7 +58,7 @@ class MainDrawer extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   color: Theme.of(context).primaryColor,
                   child: const Padding(
-                    padding: EdgeInsets.all(15.0),
+                    padding: EdgeInsets.all(10.0),
                     child: Text(
                       'Cars',
                       style: TextStyle(
